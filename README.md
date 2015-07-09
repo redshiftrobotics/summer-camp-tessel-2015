@@ -5,7 +5,10 @@ This repository houses the libraries for the Seattle Academy Tessel summer camp.
 
 ## setup
 
-The controller.js file contains all of the libraries needed. To import this library, simple write
+The controller.js file contains all of the libraries needed. To import this library, simple install it on npm
+```
+npm install 
+
 ```
 var Controller = require("./controller.js");
 ```

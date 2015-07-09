@@ -1,4 +1,4 @@
-var Controller = require('./controller.js');
+var Controller = require('./index.js');
 
 //var Servo = new Controller.Servo(1, 2, Loaded);
 var Accelerometer;
