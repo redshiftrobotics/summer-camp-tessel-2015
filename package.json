@@ -1,5 +1,5 @@
 {
-  "name": "Tessel",
+  "name": "tessel-summer-camp",
   "version": "1.0.0",
   "description": "This repository houses the libraries for the Seattle Academy Tessel summer camp. These libraries were built to allow easy access to the Tessel’s servo shield, accelerometer shield, and GPIO pins. This will allow students to move around a small robot and allow it to interact with its environment.",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Isaac Zinda",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "accel-mma84": "^0.2.4",
     "servo-pca9685": "^0.1.3",
