@@ -1,10 +1,41 @@
 var tessel = require('tessel');
 
-var ServoImport = require('servo-pca9685');
-var Servo;
+var SrvoImport = require('servo-pca9685');
+var Srvo;
 
 var AccelImport = require('accel-mma84');
 var Accel;
+
+var BtnImport = require('tessel-gpio-button');
+var Btn;
+
+//the pin should be a string like 'G3'
+function Button(Pin, PressedFunction)
+{
+  var Btn = BtnImport.use(tessel.port['GPIO'].pin[Pin]);
+
+  this.Configured = false;
+  this.Pin = Pin;
+
+  var that = this;
+
+  Btn.on('ready', function() 
+  {
+    var FirstPress = false;
+    Btn.on('press', function() 
+    {
+      //for some reason the button triggers a press on startup. This negates that.
+      if(FirstPress)
+      {
+        PressedFunction();
+      }
+      if(!FirstPress)
+      {
+        FirstPress = true;
+      }
+    });
+  });
+}
 
 function Accelerometer(Callback)
 {
@@ -47,7 +78,7 @@ function Accelerometer(Callback)
 function Servo(LeftServoNumber, RightServoNumber, Callback) 
 {
   //the servo is always on port A
-  ServoImport = sevoimport.use(tessel.port['A']);
+  Srvo = SrvoImport.use(tessel.port['A']);
 
   //set up the servo configuraiton. This is tuned for the servos on the android.
   this.LeftServoConfig = {"Direction": -1, "Number": LeftServoNumber, "Bottom": .045, "Top": .115};
@@ -58,13 +89,13 @@ function Servo(LeftServoNumber, RightServoNumber, Callback)
   var that = this;
 
   //once the servo shield is ready, configure everything
-  Servo.on('ready', function () 
+  Srvo.on('ready', function () 
   {
-    Servo.configure(that.LeftServoConfig["Number"], that.LeftServoConfig["Bottom"], that.LeftServoConfig["Top"], function () {
-      Servo.configure(that.RightServoConfig["Number"], that.RightServoConfig["Bottom"], that.RightServoConfig["Top"], function () 
+    Srvo.configure(that.LeftServoConfig["Number"], that.LeftServoConfig["Bottom"], that.LeftServoConfig["Top"], function () {
+      Srvo.configure(that.RightServoConfig["Number"], that.RightServoConfig["Bottom"], that.RightServoConfig["Top"], function () 
       {
-        Servo.move(that.LeftServoConfig["Number"], .5);
-        Servo.move(that.RightServoConfig["Number"], .5);
+        Srvo.move(that.LeftServoConfig["Number"], .5);
+        Srvo.move(that.RightServoConfig["Number"], .5);
         that.Configured = true;
         console.log("Setup Servos.");
         Callback();
@@ -94,10 +125,11 @@ Servo.prototype.Move = function(ServoName, Speed)
   {
     Speed *= this.RightServoConfig["Direction"];
     Speed = (parseFloat(Speed) + 100.0) / 200.0;
-    Servo.move(this.RightServoConfig["Number"], Speed);
+    Srvo.move(this.RightServoConfig["Number"], Speed);
   }
 };
 
 // export the classes
 module.exports.Servo = Servo;
 module.exports.Accelerometer = Accelerometer;
+module.exports.Button = Button;

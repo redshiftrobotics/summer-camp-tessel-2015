@@ -60,3 +60,15 @@ The configured property is a bool which will return true is the servos are setup
 ```
 Servo.Configured;
 ```
+
+## button
+
+To use the button command, just initialize a new instance of the button object. The pin variable will be the GPIO pin, as a string. This could look like "G3" or "G6". The function variable will be the function that is called when the button is pressed. 
+
+```
+function Function()
+{
+	console.log("Pressed!");
+}
+new Controller.Button("G3", Function);
+```
