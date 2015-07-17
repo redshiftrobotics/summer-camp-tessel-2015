@@ -3,7 +3,7 @@
 
 This repository houses the libraries for the Seattle Academy Tessel summer camp. These libraries were built to allow easy access to the Tessel’s servo shield, accelerometer shield, and GPIO pins. This will allow students to move around a small robot and allow it to interact with its environment.
 
-## setup
+## software setup
 
 The controller.js file contains all of the libraries needed. To import this library, simple install it on npm. This will put it in the node_moduels folder.
 ```
@@ -13,6 +13,12 @@ To import the module into your program, just use require.
 ```
 var Controller = require("tessel-summer-camp");
 ```
+
+## hardware setup
+
+The button class in the tessel-summer-camp module allows the user to choose which port to use. However, every other class requires specific ports or pins to be used. Below is the tessel wiring layout:
+
+![alt tag](http://isaaczinda.com/Downloads/WiringDiagram.png)  
 
 ## accelerometer
 
@@ -72,3 +78,27 @@ function Function()
 }
 new Controller.Button("G3", Function);
 ```
+
+## Led Matrix
+
+For the LED Matrix to work properly, additional setup steps need to be taken. The code located in the directory node_modules/tessel-summer-camp/ArduinoLEDMatrix needs to be installed onto an ardiuno mini pro. Now you are ready to go!
+
+To use the controller's LEDMatrix function, you first need to initialize the object. The only argument for the constructor is a callback, which will be run when the program sends its first data to the Led Matrix.
+
+```
+LEDs = new Controller.LEDMatrix(function()
+{
+});
+```
+
+The clear function clears the Led Matrix:
+
+```
+LEDs.Clear();
+```
+
+The SetLight function turns on one of the LEDs in the matrix. Its first argument is OnOrOff, which is a string. If you want to turn the LED on, pass a "1". To turn it off, pass a "0". The second argument is an integer called Number. This is the position of the LED to turn on or off. The positions range from 0 to 63, and the order is from right to left (like reading).
+
+```
+LEDs.SetLight("1", 0); //turns the first LED on
+``` 

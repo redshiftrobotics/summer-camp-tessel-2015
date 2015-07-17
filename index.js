@@ -9,6 +9,51 @@ var Accel;
 var BtnImport = require('tessel-gpio-button');
 var Btn;
 
+var uartBridge = tessel.port['D'].UART({baudrate: 9600}); 
+
+//setup the string insert function
+String.prototype.insertAt=function(index, string) { 
+  return this.substr(0, index) + string + this.substr(index);
+}
+
+function LEDMatrix(Callback)
+{
+  this.Data = "0000000000000000000000000000000000000000000000000000000000000000";
+  this.Configured = false;
+
+  var that = this;
+
+  //send the serial command to the arduino every .1 seconds
+  setInterval(function()
+  {
+    uartBridge.write("s");
+    uartBridge.write(that.Data);
+    uartBridge.write("e");
+
+    //do the callback only once data has been sent
+    if(!Configured)
+    {
+      Configured = true;
+      Callback();
+    }
+  }, 100);
+}
+
+//set OnOrOff to "0" or "1"
+LEDMatrix.prototype.SetLight = function (OnOrOff, Number)
+{
+  if(Number < 64)
+  {
+    this.Data = [this.Data.slice(0, Number), OnOrOff, this.Data.slice(Number + 1)].join('');
+  }
+}
+
+//set OnOrOff to "0" or "1"
+LEDMatrix.prototype.Clear = function()
+{
+  this.Data = "0000000000000000000000000000000000000000000000000000000000000000";
+}
+
 //the pin should be a string like 'G3'
 function Button(Pin, PressedFunction)
 {
@@ -133,3 +178,4 @@ Servo.prototype.Move = function(ServoName, Speed)
 module.exports.Servo = Servo;
 module.exports.Accelerometer = Accelerometer;
 module.exports.Button = Button;
+module.exports.LEDMatrix = LEDMatrix;
