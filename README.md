@@ -79,7 +79,7 @@ function Function()
 new Controller.Button("G3", Function);
 ```
 
-## Led Matrix
+## led matrix
 
 For the LED Matrix to work properly, additional setup steps need to be taken. The code located in the directory node_modules/tessel-summer-camp/ArduinoLEDMatrix needs to be installed onto an ardiuno mini pro. Now you are ready to go!
 
@@ -101,4 +101,25 @@ The SetLight function turns on one of the LEDs in the matrix. Its first argument
 
 ```
 LEDs.SetLight("1", 0); //turns the first LED on
+``` 
+
+## sound
+
+To use the controller's Sound function, you first need to initialize the object. The Port varaible should be set to 0, 1, or 2. These port values correspond with the G4, G5, and G6 GPIO pins. The Callback function will be called when the Sound function has been configured.
+
+ ```
+Piezo = new Controller.Sound(0, function() //sets the port to 0, which is pin G4 
+{
+});
+```
+
+To change the frequency of the sound, simply change the Frequency property of the Sound function:
+
+```
+Piezo.Frequency = 1000; //this will set the frequency to 1000
+``` 
+
+To turn the sound off, set the frequency to 0.
+```
+Piezo.Frequency = 0;
 ``` 

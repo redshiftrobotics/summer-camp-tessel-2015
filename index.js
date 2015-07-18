@@ -12,8 +12,36 @@ var Btn;
 var uartBridge = tessel.port['D'].UART({baudrate: 9600}); 
 
 //setup the string insert function
-String.prototype.insertAt=function(index, string) { 
+String.prototype.insertAt = function(index, string) { 
   return this.substr(0, index) + string + this.substr(index);
+}
+
+//must be port 0, 1, or 2
+function Sound(Port, Callback)
+{
+  this.Port = Port;
+  this.Frequency = 0;
+
+  var that = this;
+
+  Callback();
+
+  setInterval(function()
+  {
+    if(that.Frequency = 0)
+    {
+      //set the sensor to off which = no sound
+      gpio.pwm[this.Port].pwmDutyCycle(0);
+    }
+    else
+    {
+      // Tell the GPIO port that the frequency of its pwm pins is 100 Hz
+      gpio.pwmFrequency(that.Frequency);  
+
+      //set the sensor to half on half off
+      gpio.pwm[that.Port].pwmDutyCycle(.5);
+    }
+  }, 100);
 }
 
 function LEDMatrix(Callback)
@@ -179,3 +207,4 @@ module.exports.Servo = Servo;
 module.exports.Accelerometer = Accelerometer;
 module.exports.Button = Button;
 module.exports.LEDMatrix = LEDMatrix;
+module.exports.Sound = Sound;
