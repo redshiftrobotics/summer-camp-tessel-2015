@@ -97,7 +97,7 @@ The clear function clears the Led Matrix:
 LEDs.Clear();
 ```
 
-The SetLight function turns on one of the LEDs in the matrix. Its first argument is OnOrOff, which is a string. If you want to turn the LED on, pass a "1". To turn it off, pass a "0". The second argument is an integer called Number. This is the position of the LED to turn on or off. The positions range from 0 to 63, and the order is from right to left (like reading).
+The SetLight function turns on one of the LEDs in the matrix. Its first argument is OnOrOff, which is a string. If you want to turn the LED on, pass a "1". To turn it off, pass a "0". The second argument is an integer called Number. This is the position of the LED to turn on or off. The positions range from 0 to 63, and the order is from left to right (like reading).
 
 ```
 LEDs.SetLight("1", 0); //turns the first LED on
@@ -105,7 +105,7 @@ LEDs.SetLight("1", 0); //turns the first LED on
 
 ## sound
 
-To use the controller's Sound function, you first need to initialize the object. The Port varaible should be set to 0, 1, or 2. These port values correspond with the G4, G5, and G6 GPIO pins. The Callback function will be called when the Sound function has been configured.
+To use the controller's Sound function, you first need to initialize the object. The Port variable should be set to 0, 1, or 2. These port values correspond with the G4, G5, and G6 GPIO pins. The Callback function will be called when the Sound function has been configured.
 
  ```
 Piezo = new Controller.Sound(0, function() //sets the port to 0, which is pin G4 
