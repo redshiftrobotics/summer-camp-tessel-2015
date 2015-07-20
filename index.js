@@ -191,7 +191,7 @@ Servo.prototype.Move = function(ServoName, Speed)
   {
     Speed *= this.LeftServoConfig["Direction"];
     Speed = (parseFloat(Speed) + 100.0) / 200.0;
-    Servo.move(this.LeftServoConfig["Number"], Speed);
+    Srvo.move(this.LeftServoConfig["Number"], Speed);
   }
 
   if(ServoName == "Right" || ServoName == "right")
