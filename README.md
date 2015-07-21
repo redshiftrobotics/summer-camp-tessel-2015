@@ -72,11 +72,9 @@ Servo.Configured;
 To use the button command, just initialize a new instance of the button object. The pin variable will be the GPIO pin, as a string. This could look like "G3" or "G6". The function variable will be the function that is called when the button is pressed. 
 
 ```
-function Function()
-{
+new Controller.Button("G3", function() {
 	console.log("Pressed!");
-}
-new Controller.Button("G3", Function);
+});
 ```
 
 ## led matrix
@@ -122,4 +120,4 @@ Piezo.Frequency = 1000; //this will set the frequency to 1000
 To turn the sound off, set the frequency to 0.
 ```
 Piezo.Frequency = 0;
-``` 
+```
