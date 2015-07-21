@@ -10,8 +10,9 @@
   "license": "MIT",
   "dependencies": {
     "accel-mma84": "^0.2.4",
+    "express": "^4.13.0",
     "servo-pca9685": "^0.1.3",
-    "express": "^4.13.0"
+    "tessel-gpio-button": "^1.1.0"
   },
   "devDependencies": {},
   "repository": {
