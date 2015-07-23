@@ -44,13 +44,9 @@ function Sound(Port, Callback)
   }, 100);
 }
 
-function Display(Callback)
+function Display(state)
 {
-  
-  this.Character = "";
-  uartBridge.write(this.Character);
-  Callback();
-
+  uartBridge.write(state);
 }
 
 
