@@ -44,6 +44,16 @@ function Sound(Port, Callback)
   }, 100);
 }
 
+function Display(Callback)
+{
+  
+  this.Character = "";
+  uartBridge.write(this.Character);
+  Callback();
+
+}
+
+
 function LEDMatrix(Callback)
 {
   this.Data = "0000000000000000000000000000000000000000000000000000000000000000";
@@ -208,3 +218,4 @@ module.exports.Accelerometer = Accelerometer;
 module.exports.Button = Button;
 module.exports.LEDMatrix = LEDMatrix;
 module.exports.Sound = Sound;
+module.exports.Display = Display;
