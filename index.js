@@ -9,6 +9,8 @@ var Accel;
 var BtnImport = require('tessel-gpio-button');
 var Btn;
 
+var Stoggle=1;
+
 var uartBridge = tessel.port['D'].UART({baudrate: 9600}); 
 
 //setup the string insert function
@@ -17,75 +19,20 @@ String.prototype.insertAt = function(index, string) {
 }
 
 //must be port 0, 1, or 2
-function Sound(Port, Callback)
+function Sound()
 {
-  this.Port = Port;
-  this.Frequency = 0;
-
-  var that = this;
-
-  Callback();
-
-  setInterval(function()
-  {
-    if(that.Frequency = 0)
-    {
-      //set the sensor to off which = no sound
-      gpio.pwm[this.Port].pwmDutyCycle(0);
-    }
-    else
-    {
-      // Tell the GPIO port that the frequency of its pwm pins is 100 Hz
-      gpio.pwmFrequency(that.Frequency);  
-
-      //set the sensor to half on half off
-      gpio.pwm[that.Port].pwmDutyCycle(.5);
-    }
-  }, 100);
+  if(Stoggle==0){
+    uartBridge.write("run");
+    Stoggle=1;
+  }else{
+    uartBridge.write("shutup");
+    Stoggle=0;
+  }
 }
 
 function Display(state)
 {
   uartBridge.write(state);
-}
-
-
-function LEDMatrix(Callback)
-{
-  this.Data = "0000000000000000000000000000000000000000000000000000000000000000";
-  this.Configured = false;
-
-  var that = this;
-
-  //send the serial command to the arduino every .1 seconds
-  setInterval(function()
-  {
-    uartBridge.write("s");
-    uartBridge.write(that.Data);
-    uartBridge.write("e");
-
-    //do the callback only once data has been sent
-    if(!Configured)
-    {
-      Configured = true;
-      Callback();
-    }
-  }, 100);
-}
-
-//set OnOrOff to "0" or "1"
-LEDMatrix.prototype.SetLight = function (OnOrOff, Number)
-{
-  if(Number < 64)
-  {
-    this.Data = [this.Data.slice(0, Number), OnOrOff, this.Data.slice(Number + 1)].join('');
-  }
-}
-
-//set OnOrOff to "0" or "1"
-LEDMatrix.prototype.Clear = function()
-{
-  this.Data = "0000000000000000000000000000000000000000000000000000000000000000";
 }
 
 //the pin should be a string like 'G3'
@@ -212,6 +159,5 @@ Servo.prototype.Move = function(ServoName, Speed)
 module.exports.Servo = Servo;
 module.exports.Accelerometer = Accelerometer;
 module.exports.Button = Button;
-module.exports.LEDMatrix = LEDMatrix;
 module.exports.Sound = Sound;
 module.exports.Display = Display;
