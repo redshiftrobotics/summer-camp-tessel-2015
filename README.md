@@ -81,43 +81,18 @@ new Controller.Button("G3", function() {
 
 For the LED Matrix to work properly, additional setup steps need to be taken. The code located in the directory node_modules/tessel-summer-camp/ArduinoLEDMatrix needs to be installed onto an ardiuno mini pro. Now you are ready to go!
 
-To use the controller's LEDMatrix function, you first need to initialize the object. The only argument for the constructor is a callback, which will be run when the program sends its first data to the Led Matrix.
+None of this code worked and Kale got angry so he rewrote the function so strings are passed from the tessel over serial. The serial communication is pretty much useless and all screwed up so strings become numbers that are in no way related to the strings. Now there are two key works that will write things on the LCD. Writing ```on``` into the function writes a 1 on the LED matrix while writing ```off``` into the function writes a 2 on the LED matrix.
 
 ```
-LEDs = new Controller.LEDMatrix(function()
-{
-});
+Controller.Display("on");
 ```
-
-The clear function clears the Led Matrix:
-
-```
-LEDs.Clear();
-```
-
-The SetLight function turns on one of the LEDs in the matrix. Its first argument is OnOrOff, which is a string. If you want to turn the LED on, pass a "1". To turn it off, pass a "0". The second argument is an integer called Number. This is the position of the LED to turn on or off. The positions range from 0 to 63, and the order is from left to right (like reading).
-
-```
-LEDs.SetLight("1", 0); //turns the first LED on
-``` 
 
 ## sound
 
 To use the controller's Sound function, you first need to initialize the object. The Port variable should be set to 0, 1, or 2. These port values correspond with the G4, G5, and G6 GPIO pins. The Callback function will be called when the Sound function has been configured.
 
- ```
-Piezo = new Controller.Sound(0, function() //sets the port to 0, which is pin G4 
-{
-});
-```
-
-To change the frequency of the sound, simply change the Frequency property of the Sound function:
+This also didn't work and sound capability has been moved to the arduino. Therefore communications are passed through serial communication (which is hardly usable in this instance). Use the function to toggle sound on and off.
 
 ```
-Piezo.Frequency = 1000; //this will set the frequency to 1000
-``` 
-
-To turn the sound off, set the frequency to 0.
-```
-Piezo.Frequency = 0;
+Controller.Sound();
 ```
