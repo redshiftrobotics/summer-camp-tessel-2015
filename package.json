@@ -1,6 +1,6 @@
 {
   "name": "tessel-summer-camp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "This repository houses the libraries for the Seattle Academy Tessel summer camp. These libraries help the Tessel interface with servos and an accelerometer, and will be used to help the students program a robot.",
   "main": "index.js",
   "scripts": {
